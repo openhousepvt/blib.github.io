@@ -658,7 +658,7 @@ welcome
   /* height: 100vh; */
   margin-top: 140px;
   /* min-height: 793px; */
-  background-image: url(../images/home-screen14.svg);
+  background-image: url('https://blib-web-assets.sgp1.cdn.digitaloceanspaces.com/images/home-screen.svg');
   background-repeat: no-repeat;
   background-position: right top;
 }
@@ -828,7 +828,7 @@ promotion
 */
 
 .left-image-decor {
-  background-image: url(../images/left-bg-decor.png);
+  background-image: url('https://blib-web-assets.sgp1.cdn.digitaloceanspaces.com/images/left-bg-decor.png');
   background-repeat: no-repeat;
   position: absolute;
   width: 100%;
@@ -879,7 +879,7 @@ testimonials
 --------------------------------------------
 */
 .right-image-decor {
-  background-image: url(../images/right-bg-decor.png);
+  background-image: url('https://blib-web-assets.sgp1.cdn.digitaloceanspaces.com/images/right-bg-decor.png');
   background-repeat: no-repeat;
   background-position: right center;
   position: absolute;
@@ -1007,7 +1007,7 @@ footer
 footer {
   margin-top: 30px;
   padding-top: 120px;
-  background-image: url(../images/footer-bg.png);
+  background-image: url('https://blib-web-assets.sgp1.cdn.digitaloceanspaces.com/images/footer-bg.png');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
