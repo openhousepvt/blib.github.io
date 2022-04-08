@@ -147,7 +147,7 @@ a.main-button-slider {
   font-size: 14px;
   border-radius: 25px;
   padding: 15px 25px;
-  background-color: #fba70b;
+  background-color: #fd7e14;
   text-transform: uppercase;
   color: #fff;
   font-weight: 600;
@@ -681,7 +681,7 @@ welcome
 
 .welcome-area .header-text h1 em {
   font-style: normal;
-  color: #fba70b;
+  color: #fd7e14;
 }
 
 .welcome-area .header-text p {
@@ -1087,7 +1087,7 @@ footer .right-content {
 
 .footer-content .right-content h2 em {
   font-style: normal;
-  color: #fba70b;
+  color: gold;
 }
 
 .footer-content .right-content p {
