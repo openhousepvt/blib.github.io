@@ -58,7 +58,9 @@
                 else
                   Snackbar.show({pos: 'top-center', text:"Something Went Wrong. Please Try After Sometime!", actionText: 'TRY AGAIN!', actionTextColor: 'red' });
             })
-            .catch(error => error)
+            .catch(error => {
+                Snackbar.show({pos: 'top-center', text:"Something Went Wrong. Please Try After Sometime!", actionText: 'TRY AGAIN!', actionTextColor: 'red' });
+            })
             .finally(() => {
                document.getElementById("form-submit").disabled = false;
             });
