@@ -143,3 +143,24 @@ a[rel~=nofollow]:hover {
 .email-container:hover{
     box-shadow: 1px 2px 2px;
 }
+
+.back-icon{
+    padding-left: 30px;
+    padding-top: 30px;
+}
+.back-icon button{
+    background:none;
+    border: none;
+    cursor: pointer;
+    align-items: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap:10px;
+}
+.back-icon i{
+    font-size: 20px;
+}
+.back-icon span{
+    font-size:15px;
+}
