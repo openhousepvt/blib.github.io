@@ -74,6 +74,8 @@
 
 		//smoothscroll
 		$('.menu-item').on('click', function (e) {
+			if(this.id === 'redirect-otp-page')
+			  window.location.href = "web-event-detail.html";
 			e.preventDefault();
 			var athis = this;
 			var target = this.hash,

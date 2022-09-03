@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Team Event Description</title>
+  <!-- Bootstrap 5 CDN Link -->
+  <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom CSS Link -->
+  <link rel="stylesheet" href="style.css">
+  <script>
+    function handleOnSubmit(otp) {
+    fetch(`http://localhost:8084/event/eventDetailByOtp?otp=` + otp)
+    .then(res=>res.json())
+    .then((txt) => {
+      console.log(txt);
+      txt=txt;
+      document.getElementById("eventname").innerHTML = txt.event.eventName;
+      document.getElementById("memberscount").innerHTML = txt.participantCount;
+      document.getElementById("hostname").innerHTML = "Organised by " + txt.hostUserProfile.firstName + " " + txt.hostUserProfile.lastName;
+      loc=" ";
+
+      if(txt.event.eventType=="ONLINE") {
+        let url = txt.event.meetingLink
+         if(url) {
+          if(url.match('https://') || url.match('http://')) {
+            url = url
+          } else {
+            console.log(url);
+            url = 'https://' + url
+            console.log(url);
+          }
+          loc = `<a target = "_blank" href="` + url + `"/>` + txt.event.meetingLink + `</a>`
+         } else {
+          loc = 'Unable to get Link!'
+         }
+
+        console.log(loc);
+      }
+      else {
+        if(txt.location) {
+          if(txt.location.locality)
+            loc = txt.location.locality + ', ' + txt.location.city;
+          else
+            loc = txt.location.city;
+        } else {
+          loc = ''
+        }
+      }
+      document.getElementById("eventlocation").innerHTML = loc;
+      document.getElementById("eventDescription").innerHTML = txt.event.eventDescription;
+      document.getElementById("memberscountheader").innerHTML = "Members (" + txt.participantCount + ")";
+      document.getElementById("orgainsername").innerHTML = "Organised by " + txt.hostUserProfile.firstName + " " + txt.hostUserProfile.lastName;
+
+      // image setting
+      img = document.getElementById("image");
+      img.src= txt.event.imageUrl;
+      
+      img = document.getElementById("hostimage");
+      img.src= txt.hostUserProfile.profilePic;
+
+      const startDate = new Date(txt.event.startTimeStamp).toLocaleDateString('en-GB', {
+        day: '2-digit', month: 'short', year: '2-digit'
+      }).replace(/ /g, ' ');
+
+      const endDate = new Date(txt.event.endTimeStamp).toLocaleDateString('en-GB', {
+        day: '2-digit', month: 'short', year: '2-digit'
+      }).replace(/ /g, ' ');
+
+      const startTime = new Date(txt.event.startTimeStamp).toLocaleString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })
+
+      const endTime = new Date(txt.event.endTimeStamp).toLocaleString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })
+
+      document.getElementById("eventDate").innerHTML = startDate + " - " + endDate;
+      document.getElementById("eventTime").innerHTML = startTime + " - " + endTime;
+
+      var imagelist="";
+
+      for (let index in txt.participantsDetail){
+
+        let imageUrl = txt.participantsDetail[index].minThumbnailUrl || txt.participantsDetail[index].profilePic
+        imagelist += `<img src="` + txt.participantsDetail[index].profilePic + `"class= "flex me-4 mt-3" style="height:60px; width:60px; border-radius: 50%;"></img>`;
+      }
+    
+      document.getElementById("membersgrid").innerHTML = imagelist;
+      document.getElementById("otp_container").style.display = "none"; 
+      document.getElementById("event_detail_container").style.display = "revert"; 
+  }).catch(error => {
+    document.getElementById("otp-message").innerHTML = `<span class="text-primary fw-bold text-decoration-none">` + "OTP is invalid! Please Try Again" + `</span>`
+            }).finally(() => {
+    document.getElementById("form-submit").disabled = false;
+  })
+}
+  </script>
+  	<!-- Custom CSS Link -->
+	<link rel="stylesheet" href="style.css">
+    <script>
+    let digitValidate = function(ele){
+        console.log(ele.value);
+        ele.value = ele.value.replace(/[^0-9A-Za-z]/g,'');
+    }
+
+    let tabChange = function(val){
+    
+    let ele = document.querySelectorAll('input');
+    if(val <4 && ele[val-1].value != ''){
+         ele[val].focus()
+    }else if(val-2 >=0 && ele[val-1].value == ''){
+        ele[val-2].focus()
+    }   
+    }
+
+    let onSubmit = function(event){
+        event.preventDefault()
+        document.getElementById("form-submit").disabled = true;
+        console.log("Submited")
+        let ele = document.querySelectorAll('input');
+        let otp = ele[0].value +  ele[1].value +  ele[2].value +  ele[3].value;
+        console.log(document.querySelectorAll('input'));
+        handleOnSubmit(otp)
+    }
+
+    </script>
+</head>
+
+<body>
+    <section id = "otp_container" class="wrapper">
+        <div class="container mt-4">
+            <div class="col-sm-8 offset-sm-2 col-lg-6 offset-lg-3 col-xl-6 offset-xl-3 text-center">
+                <!-- <div class="logo">
+                    <img src="images/logo.png" class="img-fluid" alt="logo">
+                </div> -->
+                <form class="rounded bg-white shadow p-5">
+                    <h3 class="text-dark fw-bolder fs-4 mb-2">Two Step Verification</h3>
+    
+                    <div class="fw-normal text-muted mb-4">
+                        Enter the event verification code 
+                    </div>
+                    <div class="otp_input text-start mb-2">
+                        <label for="digit">Type your 4 digit security code</label>
+                        <div id="otp" class="d-flex align-items-center justify-content-between mt-2">
+                            <input type="text" class="form-control" placeholder="" oninput='digitValidate(this)' onkeyup='tabChange(1)' maxlength=1>
+                            <input type="text" class="form-control" placeholder="" oninput='digitValidate(this)' onkeyup='tabChange(2)' maxlength=1>
+                            <input type="text" class="form-control" placeholder="" oninput='digitValidate(this)' onkeyup='tabChange(3)' maxlength=1>
+                            <input type="text" class="form-control" placeholder="" oninput='digitValidate(this)' onkeyup='tabChange(4)' maxlength=1>
+                        </div> 
+                    </div>  
+    
+                    <button type="submit" id = 'form-submit' class="btn btn-primary submit_btn my-4"  onclick='onSubmit(event)'>Submit</button> 
+    
+                    <div id = 'otp-message' class="fw-normal text-muted mb-2">
+                        Didn’t have the code ? <span class="text-primary fw-bold text-decoration-none">Checkout Blib</span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+  <section id = "event_detail_container" class="wrapper" style="display: none;">
+    <div class="container mt-4">
+      <div id="bars" class="container d-flex flex-row">
+        <div class="flex-fill mx-4">
+          <img id="image" src="image.png" class="flex-fill" alt="logo">
+        </div>
+        <div class="flex-fill ms-4 mt-4">
+          <h1 class="fw-bold" id="eventname"> Project Management Team</h1>
+          <div class="mt-2">
+            <div><i data-feather="watch"></i> <p id="eventlocation">
+              Tel Aviv-Yafo</p></div>
+            <p id="eventDate"></i>
+              2000 members</p>
+            <p id="eventTime">2000 members</p>
+            <p id="memberscount">2000 members</p>
+            <p id="hostname">Organised by Anurag and 3 others</p>
+          </div>
+        </div>
+      </div>
+      <div class="container mt-4">
+        <div class="container d-flex" id="bars">
+          <div class="flex-fill me-4 ">
+            <h1>What we're about</h1>
+            <p id="eventDescription">
+              Product Management Meetup (IL) has been set up by PMsphere to facilitate networking events for product
+              leaders in Israel and to lead the conversation about common challenges in product management and
+              development.
+              We welcome product managers, CEOs, entrepreneurs, CTOs, R&D managers, VP Marketing, UX, designers and
+              anyone else who is involved in developing products, to join our group and to take part in our events.
+            </p>
+          </div>
+          <div class="flex-fill">
+            <div class="my-4"> 
+            <h1>Orgainsers</h1>
+            <div class="d-flex">
+              <img id="hostimage" src="image.png" class="flex mr-2" style="height:60px; width:60px; border-radius: 50%;"></img>
+              <p class="mt-3 mx-3" id="orgainsername">Organised by Anurag and 3 others</p>
+            </div>
+          </div>
+            <h1 id="memberscountheader">Members()</h1>
+            <div id="membersgrid" class="d-flex">
+              <img src="image.png" class="flex me-4 mt-3" style="height:60px; width:60px; border-radius: 50%;"></img>
+              <img src="image.png" class="flex me-4 mt-3" style="height:60px; width:60px; border-radius: 50%;"></img>
+              <img src="image.png" class="flex me-4 mt-3" style="height:60px; width:60px; border-radius: 50%;"></img>
+              <img src="image.png" class="flex me-4 mt-3" style="height:60px; width:60px; border-radius: 50%;"></img>
+              <img src="image.png" class="flex me-4 mt-3" style="height:60px; width:60px; border-radius: 50%;"></img>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+    </div>
+  </section>
+  <script>
+    feather.replace()
+  </script>
+</body>
+
+</html>
