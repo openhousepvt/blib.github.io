@@ -14,10 +14,9 @@
   <link rel="stylesheet" href="style.css">
   <script>
     function handleOnSubmit(otp) {
-    fetch(`http://localhost:8084/event/eventDetailByOtp?otp=` + otp)
+    fetch(`https://api.dev.theopenhouse.co.in/event/eventDetailByOtp?otp=` + otp)
     .then(res=>res.json())
     .then((txt) => {
-      console.log(txt);
       txt=txt;
       document.getElementById("eventname").innerHTML = txt.event.eventName;
       document.getElementById("memberscount").innerHTML = txt.participantCount;
@@ -30,16 +29,12 @@
           if(url.match('https://') || url.match('http://')) {
             url = url
           } else {
-            console.log(url);
             url = 'https://' + url
-            console.log(url);
           }
           loc = `<a target = "_blank" href="` + url + `"/>` + txt.event.meetingLink + `</a>`
          } else {
           loc = 'Unable to get Link!'
          }
-
-        console.log(loc);
       }
       else {
         if(txt.location) {
@@ -100,7 +95,6 @@
 	<link rel="stylesheet" href="style.css">
     <script>
     let digitValidate = function(ele){
-        console.log(ele.value);
         ele.value = ele.value.replace(/[^0-9A-Za-z]/g,'');
     }
 
@@ -117,10 +111,8 @@
     let onSubmit = function(event){
         event.preventDefault()
         document.getElementById("form-submit").disabled = true;
-        console.log("Submited")
         let ele = document.querySelectorAll('input');
         let otp = ele[0].value +  ele[1].value +  ele[2].value +  ele[3].value;
-        console.log(document.querySelectorAll('input'));
         handleOnSubmit(otp)
     }
 
