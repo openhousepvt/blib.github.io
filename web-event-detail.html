@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="style.css">
   <script>
     function handleOnSubmit(otp) {
-    fetch(`https://api.dev.theopenhouse.co.in/event/eventDetailByOtp?otp=` + otp)
+    fetch(`https://api.prod.theopenhouse.co.in/event/eventDetailByOtp?otp=` + otp)
     .then(res=>res.json())
     .then((txt) => {
       txt=txt;

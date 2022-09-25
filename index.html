@@ -47,7 +47,7 @@
             let firstName = name.split(' ')[0];
             let lastName = name.substring(firstName.length).trim();
             document.getElementById("form-submit").disabled = true;
-            fetch("https://api.dev.theopenhouse.co.in/web/early-access", {
+            fetch("https://api.prod.theopenhouse.co.in/web/early-access", {
             headers: {
                'Accept': 'application/json',
                'Content-Type': 'application/json',
