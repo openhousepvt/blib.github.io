@@ -107,6 +107,12 @@ body{
         height:50px; 
     }
 }
+
+@media (min-width:1200px){
+    #flex-bar-container { 
+        width: 35%; 
+    }
+}
 @media (max-width:767px){
     .wrapper .otp_input input{ 
         height:40px; 
