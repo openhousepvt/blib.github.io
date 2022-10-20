@@ -12,6 +12,13 @@
 
   <!-- Custom CSS Link -->
   <link rel="stylesheet" href="style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QW23QG1PRK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-QW23QG1PRK');
+</script>
   <script>
     function handleOnSubmit(otp) {
     fetch(`https://api.prod.theopenhouse.co.in/event/eventDetailByOtp?otp=` + otp)
@@ -95,7 +102,7 @@
 	<link rel="stylesheet" href="style.css">
     <script>
     let digitValidate = function(ele){
-        ele.value = ele.value.replace(/[^0-9A-Za-z]/g,'');
+        ele.value = ele.value.replace(/[^0-9]/g,'');
     }
 
     let tabChange = function(val){
@@ -160,7 +167,7 @@
         <div class="flex-fill ms-4 mt-4">
           <h1 class="fw-bold" id="eventname"> Project Management Team</h1>
           <div class="mt-2">
-            <div><i data-feather="watch"></i> <p id="eventlocation">
+            <!-- <div><i data-feather="watch"></i> <p id="eventlocation"> -->
               Tel Aviv-Yafo</p></div>
             <p id="eventDate"></i>
               2000 members</p>
