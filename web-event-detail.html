@@ -84,8 +84,8 @@
 
       for (let index in txt.participantsDetail){
 
-        let imageUrl = txt.participantsDetail[index].minThumbnailUrl || txt.participantsDetail[index].profilePic
-        imagelist += `<img src="` + txt.participantsDetail[index].profilePic + `"class= "flex me-4 mt-3" style="height:60px; width:60px; border-radius: 50%;"></img>`;
+        let imageUrl = txt.participantsDetail[index].minThumbnailUrl || txt.participantsDetail[index].profilePic || 'https://blib-web-assets.sgp1.cdn.digitaloceanspaces.com/default_userpic.png'
+        imagelist += `<img src="` + imageUrl + `"class= "flex me-4 mt-3" style="height:60px; width:60px; border-radius: 50%;"></img>`;
       }
     
       document.getElementById("membersgrid").innerHTML = imagelist;
@@ -167,9 +167,8 @@
         <div class="flex-fill ms-4 mt-4">
           <h1 class="fw-bold" id="eventname"> Project Management Team</h1>
           <div class="mt-2">
-            <div> <p id="eventlocation"></p>
+            <div> <p id="eventlocation">Tel Aviv-Yafo</p></div>
             <!-- <div><i data-feather="watch"></i> <p id="eventlocation"> -->
-              Tel Aviv-Yafo</p></div>
             <p id="eventDate"></i>
               2000 members</p>
             <p id="eventTime">2000 members</p>
